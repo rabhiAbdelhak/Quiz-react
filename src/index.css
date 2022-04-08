@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700&display=swap');
+
+:root{
+  --bg-color: rgb(249, 252, 245);
+  --bg-second-color : white;
+  --main-color: rgb(105, 141, 240);
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Mukta', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+._flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
