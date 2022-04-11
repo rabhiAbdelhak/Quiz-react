@@ -20,7 +20,12 @@ export default Specialheading
 
 const Wrapper = styled.div`
 padding-bottom: 15px;
-border-bottom: 1px solid rgb(0 0 0 / 0.4);
+border-bottom: 1px solid var(--bg-light-color);
 display: flex;
 justify-content: space-between;
+color: var(--primary-color);
+
+h1{
+  text-shadow: 3px 3px 5px var(--bg-light-color);
+}
 `

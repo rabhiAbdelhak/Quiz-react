@@ -30,4 +30,6 @@ width: 100%;
 
 const Content = styled.div`
 flex-direction: column;
-padding: 30px;`
+padding: 30px;
+
+`

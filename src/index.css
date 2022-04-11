@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700&display=swap');
 
 :root{
-  --bg-color: rgb(249, 252, 245);
+  --bg-color: whitesmoke;
   --bg-second-color : white;
+  --bg-light-color: lightblue;
   --main-color: rgb(105, 141, 240);
+  --font-color: #2556c0;
+  --primary-color: rgb(59, 138, 241);
 }
 
 *{

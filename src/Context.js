@@ -7,6 +7,9 @@ export const AppContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [waiting, setWaiting] = useState(true);
   const [isRunning, setIsRunning] = useState(false);
+  const [error, setError] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [time, setTime] = useState(10);
   const [options, setOptions] = useState({
     nbrQuestions: 10,
     category: 23,
@@ -21,6 +24,8 @@ export const AppContextProvider = ({ children }) => {
   
   const restartQuiz = () => {
         setQuestions([]);
+        setIndex(0);
+        setTime(10);
         setFinish(false);
         setCorrectAnswers(0);
         setWaiting(true);
@@ -36,7 +41,7 @@ export const AppContextProvider = ({ children }) => {
       setQuestions(data.results);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -57,6 +62,11 @@ export const AppContextProvider = ({ children }) => {
         restartQuiz,
         isRunning,
         setIsRunning,
+        index, 
+        setIndex,
+        time, 
+        setTime,
+        error
       }}
     >
       {children}

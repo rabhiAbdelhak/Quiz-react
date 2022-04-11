@@ -6,13 +6,14 @@ import Finish from './components/Finish';
 import Question from './components/Question';
 import SetupForm from './components/SetupForm';
 import useAppContext from './Context';
+import Error from './components/Error';
 
 function App() {
-  const {waiting, finish} = useAppContext();
+  const {waiting, finish, error} = useAppContext();
   return (
     <Wrapper className='_flex-center'>
       <Application>
-        {waiting ? <SetupForm/> : finish ? <Finish/> : <Question/>}
+        {waiting ? <SetupForm/> : finish ? <Finish/> : error ? <Error/> :<Question/>}
       </Application>
     </Wrapper>
   );

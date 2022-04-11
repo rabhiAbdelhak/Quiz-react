@@ -13,27 +13,29 @@ const Question = () => {
     setCorrectAnswers,
     setFinish,
     setIsRunning,
+    index,
+    setIndex,
+    time,
+    setTime,
   } = useAppContext();
-  const [index, setIndex] = useState(0);
-  const [time, setTime] = useState(10);
 
   // help states hooks
   const [showHelp, setShowHelp] = useState(false);
   const [isRemoveHelp, setIsRemoveHelp] = useState(true);
-  const [tellAnswerHelp,setTellAnswerHelp] = useState(false);
+  const [tellAnswerHelp, setTellAnswerHelp] = useState(false);
   const [isTellAnswerAble, setIsTellAnswerAble] = useState(true);
-   const [istimeHelp, setTimeHelp] = useState(true);
+  const [istimeHelp, setTimeHelp] = useState(true);
   //end help states hooks
+
   const helpRef = useRef();
   let mounted = useRef(1);
   let [suggetions, setSuggetions] = useState([]);
   const style = {
-    background:
-      time === 0 ? "rgba(255, 0, 0, 0.3)" : time < 5 ? "#EDE04D" : "white",
-    color: time < 5 ? "white" : "black",
+    background: time === 0 ? "rgba(255, 0, 0, 0.3)" : time < 5 ? "#EDE04D" : "",
+    color: time < 5 ? "white" : "",
   };
   const handleAnswer = (answer, e) => {
-    if(tellAnswerHelp){
+    if (tellAnswerHelp) {
       AnswerIsTrue(answer, e);
       return;
     }
@@ -74,29 +76,29 @@ const Question = () => {
   };
 
   const AnswerIsTrue = (suggestion, e) => {
-    if(!tellAnswerHelp) return;
-    if(suggestion === questions[index].correct_answer){
-      e.target.style.borderColor='green';
-      e.target.style.color = 'green';
-    }else{
-      e.target.style.borderColor= 'tomato';
-      e.target.style.color = 'tomato';
+    if (!tellAnswerHelp) return;
+    if (suggestion === questions[index].correct_answer) {
+      e.target.style.borderColor = "green";
+      e.target.style.color = "green";
+    } else {
+      e.target.style.borderColor = "tomato";
+      e.target.style.color = "tomato";
     }
     setTimeout(() => {
-      e.target.style.borderColor = 'var(--main-color)';
-      e.target.style.removeProperty('color');
+      e.target.style.removeProperty("border-color");
+      e.target.style.removeProperty("color");
     }, 3000);
     setTellAnswerHelp(false);
     setIsTellAnswerAble(false);
-  }
+  };
 
   //function to add 10 second if the timer is active
   const plusTimeHelp = () => {
-      if(!istimeHelp) return;
-      setTime(oldTime => oldTime + 10);
-      setTimeHelp(false);
-      setShowHelp(false);
-  } 
+    if (!istimeHelp) return;
+    setTime((oldTime) => oldTime + 10);
+    setTimeHelp(false);
+    setShowHelp(false);
+  };
   //useEffect hook to setsuetionswhen index change
   useEffect(() => {
     if (!loading) {
@@ -108,7 +110,8 @@ const Question = () => {
     setShowHelp(false);
     setTime(10);
     return;
-  }, [index, questions, loading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, loading]);
 
   //useEffect hook to use the timer when it is active
   useEffect(() => {
@@ -146,8 +149,6 @@ const Question = () => {
     return <div>loading..</div>;
   }
 
-  
-
   // Questoin rendering
   return (
     <Wrapper style={style}>
@@ -166,26 +167,34 @@ const Question = () => {
           );
         })}
       </Suggestions>
-      {index < questions.length - 1 && options.mode !== "eliminatoire" && (
-        <Button key={index} onClick={() => setIndex(index + 1)}>
-          Next Question
-        </Button>
-      )}
-      {options.helper && (
-        <Help onClick={() => setShowHelp((oldShow) => !oldShow)}>????</Help>
-      )}
+      <Options>
+        {index < questions.length - 1 && options.mode !== "eliminatoire" && (
+          <Button key={index} onClick={() => setIndex(index + 1)}>
+            Next Question
+          </Button>
+        )}
+        {options.helper && (
+          <Help onClick={() => setShowHelp((oldShow) => !oldShow)}>?</Help>
+        )}
+      </Options>
       <Helps ref={helpRef}>
-        <button onClick={removeTwoSuggetions} disabled={!isRemoveHelp}>Remove to wrong answers</button>
-        <button onClick={() => {
-                           setTellAnswerHelp(true)
-                           setShowHelp(false)
-                           }
-                        } 
-                disabled={!isTellAnswerAble}
-        >
-            tell me about one I select
+        <button onClick={removeTwoSuggetions} disabled={!isRemoveHelp}>
+          Rx2
         </button>
-        {options.timer && <button onClick={plusTimeHelp} disabled={!istimeHelp}>+10s</button>}
+        <button
+          onClick={() => {
+            setTellAnswerHelp(true);
+            setShowHelp(false);
+          }}
+          disabled={!isTellAnswerAble}
+        >
+          1An
+        </button>
+        {options.timer && (
+          <button onClick={plusTimeHelp} disabled={!istimeHelp}>
+            +10s
+          </button>
+        )}
       </Helps>
     </Wrapper>
   );
@@ -200,13 +209,13 @@ const Wrapper = styled.section`
   position: relative;
 
   h3 {
-    font-size: 19px;
+    font-size: 22px;
     font-weight: 500;
-    color: var(--main-color);
+    color: var(--font-color);
     letter-spacing: 1px;
     text-align: center;
-    margin: 20px 0;
-    min-height: 70px;
+    margin: 25px 0;
+    min-height: 50px;
   }
 `;
 
@@ -215,23 +224,23 @@ const Suggestions = styled.div`
   flex-wrap: wrap;
   margin: 20px auto;
   align-items: center;
-  width: 90%;
+  width: 70%;
   gap: 5%;
-  min-height: 200px;
+  min-height: 150px;
 `;
 
 const Suggetion = styled.button`
   width: 45%;
-  padding: 8px 5px;
+  padding: 8px 0px;
   margin-bottom: 10px;
   background: transparent;
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
+  border: none;
+  border-bottom: 0.1px solid var(--font-color);
   transition: 0.3s;
   cursor: pointer;
-  color: var(--main-color);
-  font-weight: bold;
-  font-size: 17px;
+  color: var(--font-color);
+  font-weight: 300;
+  font-size: 14px;
   text-align: left;
 
   :hover {
@@ -239,6 +248,10 @@ const Suggetion = styled.button`
     color: white;
     transform: scale(1.04);
   }
+`;
+const Options = styled.div`
+  padding: 10px;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -257,16 +270,20 @@ const Button = styled.button`
 `;
 
 const Help = styled.button`
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
+  float-left;
+  background: transparent;
+  color: var(--primary-color);
+  border:none;
+  font-size: 22px;
+  cursor: pointer;
+ 
+
 `;
 
 const Helps = styled.div`
 padding: 15px;
 display: flex;
 gap: 10px;
-flex-direction: column;
 align-items:center;
 justify-conent: center;
 background: white;
@@ -289,5 +306,18 @@ transition: 0.3s;
   position: absolute;
   bottom: -14px;
   left: 10px;
+}
+
+button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: var(--main-color);
+  border:none;
+  color: white;
+}
+
+button:disabled{
+  opacity: 0.2;
 }
 `;
